@@ -1,9 +1,10 @@
 pipeline{
     environment{
-        IMAGE_NAME= "python_app"
-        IMAGE_TAG= "latest"
-        STAGING = "vafemoh_staging_app"
-        PRODUCTION = "vafemoh_production_app"
+        IMAGE_NAME="python_app"
+        IMAGE_TAG="latest"
+        IMAGE_REPO="soum25"
+        STAGING="vafemoh1-staging"
+        PRODUCTION="vafemoh1-production"
     }
     agent none
     stages{
@@ -11,7 +12,7 @@ pipeline{
             agent any
             steps{
                 script {
-                    sh "docker build -t soum25/${IMAGE_NAME}:${IMAGE_TAG} ."
+                    sh "docker build -t ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG} ."
                 }
             }
         }
@@ -21,7 +22,7 @@ pipeline{
         steps{
             script {
                 sh """
-                docker run -d --name $IMAGE_NAME -p 70:5555 soum25/${IMAGE_NAME}:${IMAGE_TAG} 
+                docker run -d --name $IMAGE_NAME -p 70:5555 ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG} 
                 docker ps -a
                 sleep 7
                 """
@@ -61,14 +62,12 @@ pipeline{
             environment{
                HEROKU_API_KEY = credentials('heroku_api_key')
              }
-            steps{
+            steps {
                 sh """
-                
                 heroku container:login
                 heroku create $STAGING || echo " project already exist"
                 heroku container:push -a $STAGING web
                 heroku container:release -a $STAGING web
-                
                 """
             }
         }
