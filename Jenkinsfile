@@ -11,7 +11,7 @@ pipeline{
             agent any
             steps{
                 script {
-                    sh "docker build -t $IMAGE_NAME:$IMAGE_TAG ."
+                    sh "docker build -t soum25/${IMAGE_NAME}:${IMAGE_TAG} ."
                 }
             }
         }
@@ -21,8 +21,9 @@ pipeline{
         steps{
             script {
                 sh """
-                docker run -d --name $IMAGE_NAME -p 50:5555 $IMAGE_NAME:$IMAGE_TAG 
-                docker rm -f $IMAGE_NAME
+                docker run -d --name $IMAGE_NAME -p 70:5555 soum25/${IMAGE_NAME}:${IMAGE_TAG} 
+                docker ps -a
+                sleep 7
                 """
                     }
                 }
@@ -32,7 +33,11 @@ pipeline{
         agent any
         steps{
             script {
-                sh "curl -I 172.17.0.1:70"
+                sh """
+                curl -I 192.168.6.132:70
+                curl -I 172.17.0.1:70
+                
+                """
                     }
                 }
             }
