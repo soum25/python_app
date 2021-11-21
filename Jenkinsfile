@@ -53,24 +53,6 @@ pipeline{
             }
         }
 
-         stage("Push image on staging and Deploy"){
-             when {
-                 expression { GIT_BRANCH == "origin/main" }
-             }
-
-            agent any
-            environment{
-               HEROKU_API_KEY = credentials('heroku_api_key')
-             }
-            steps {
-                sh """
-                heroku container:login
-                heroku create $STAGING || echo " project already exist"
-                heroku container:push -a $STAGING web
-                heroku container:release -a $STAGING web
-                """
-            }
-        }
     }
 
 }
