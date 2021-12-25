@@ -23,16 +23,29 @@ pipeline{
             script {
                 sh """
                 docker run -d --name $IMAGE_NAME -p 70:5550 ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG} 
-                curl -I 192.168.6.132:70
-		curl -I 172.17.0.1:70
-		docker ps -a
-                sleep 7
+                docker stop $IMAGE_NAME
                 """
                     }
                 }
             }
 
-         stage("Clean container"){
+ 
+        stage("Test"){
+            agent any
+            steps{
+               script {
+                sh """
+                docker restart $IMAGE_NAME
+                sleep 7
+                curl -I 192.168.6.132:70
+                curl -I 172.17.0.1:70
+                
+                """
+                    }
+                }
+            }
+
+        stage("Clean container"){
             agent any
             steps{
                 sh """
