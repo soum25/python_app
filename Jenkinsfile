@@ -1,3 +1,4 @@
+#Example of pipeline
 pipeline{
     environment{
         IMAGE_NAME="python_app"
