@@ -22,22 +22,11 @@ pipeline{
         steps{
             script {
                 sh """
-                docker run -d --name $IMAGE_NAME -p 70:5555 ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG} 
-                docker ps -a
-                sleep 7
-                """
-                    }
-                }
-            }
-
-        stage("Test"){
-        agent any
-        steps{
-            script {
-                sh """
+                docker run -d --name $IMAGE_NAME -p 70:5550 ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG} 
                 curl -I 192.168.6.132:70
-                curl -I 172.17.0.1:70
-                
+		curl -I 172.17.0.1:70
+		docker ps -a
+                sleep 7
                 """
                     }
                 }
