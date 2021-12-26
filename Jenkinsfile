@@ -1,12 +1,7 @@
-pipeline{
-    environment{
-        IMAGE_NAME="python_app"
-        IMAGE_TAG="latest"
-        IMAGE_REPO="soum25"
-        STAGING="vafemoh1-staging"
-        PRODUCTION="vafemoh1-production"
+pipeline {
+    agent {
+        docker { image 'python:3.8-slim-buster' }
     }
-    agent none
     stages{
 
         stage("Set up"){
@@ -14,9 +9,7 @@ pipeline{
             steps{
                 script {
                     sh """
-			yum install updates -y
-                        yum install python3-pip -y
-			pip install -r requirements.txt
+                        pip install -r requirements.txt
                         virtualenv app_venv
                         source app_venv/bin/activate  
                         """
@@ -81,3 +74,4 @@ pipeline{
     }
 
 }
+
