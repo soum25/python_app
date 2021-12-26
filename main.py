@@ -1,12 +1,6 @@
-from flask import Flask, render_template
-
-app = Flask(__name__)
-
-
-@app.route("/")
-def hello_world():
-    return render_template('index.html')
+from flask import Flask
+from appli_file import application_main
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=5550)
+    application_main.app.run(debug=True, host="0.0.0.0", port=5555)
