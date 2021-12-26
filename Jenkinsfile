@@ -14,7 +14,9 @@ pipeline{
             steps{
                 script {
                     sh """
-                        pip install -r requirements.txt
+			yum install updates -y
+                        yum install python3-pip -y
+			pip install -r requirements.txt
                         virtualenv app_venv
                         source app_venv/bin/activate  
                         """
