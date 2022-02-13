@@ -24,6 +24,33 @@ pipeline {
                 }
             }
 
+        stage("Test"){
+            steps{
+               script {
+                sh " pytest -v"
+                    }
+                }
+            }
+
+
+         stage("static code analysis with sonar"){
+            
+            def scannerhome = tools 'sonarqube_server'
+            withSonarQubeEnv('sonarqube_server'){     
+            steps{
+               script {
+                sh """ ${scannerhome}/bin/sonar-scanner \
+                      -Dsonar.projectKey=python_test \
+                      -Dsonar.sources=. \
+                      -Dsonar.host.url=http://192.168.6.132:9000 \
+                      -Dsonar.login=3b478d7bc0ed48006b608f83128bb606ff5e679f
+                    """
+                    }
+                }
+    
+            }
+          
+        }
 
 
         stage("Build image"){
@@ -47,19 +74,9 @@ pipeline {
                 }
             }
 
-
-        stage("Test"){
-            steps{
-               script {
-                sh " pytest -v"
-                    }
-                }
-            }
-
         stage("Clean container"){
             steps{
                 sh """
-                docker stop $IMAGE_NAME
                 docker rm -f $IMAGE_NAME
                 """
             }
