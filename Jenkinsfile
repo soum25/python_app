@@ -1,7 +1,5 @@
 pipeline {
 
-    scannerhome = 'sonarqube_server'
-
     environment{
         IMAGE_NAME="python_app"
         IMAGE_TAG="latest"
@@ -33,23 +31,20 @@ pipeline {
             }
 
 
-         stage("static code analysis with sonar"){     
+        stage("static code analysis with sonar"){
             steps{
                script {
-                   withSonarQubeEnv('sonarqube_server'){
+                withSonarQubeEnv(installationName: 'sonarqube_server'){
                         sh """ ${scannerhome}/bin/sonar-scanner \
                         -Dsonar.projectKey=python_test \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=http://192.168.6.132:9000 \
-                        -Dsonar.login=3b478d7bc0ed48006b608f83128bb606ff5e679f
                         """
+                        }
                     }
                 }
-    
             }
-          
-        }
-
+            
 
         stage("Build image"){
             steps{
