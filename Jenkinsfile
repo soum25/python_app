@@ -1,7 +1,7 @@
 pipeline {
 
-    def scannerhome = tools 'sonarqube_server'
-      
+    scannerhome = 'sonarqube_server'
+
     environment{
         IMAGE_NAME="python_app"
         IMAGE_TAG="latest"
