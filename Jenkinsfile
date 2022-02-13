@@ -1,5 +1,7 @@
 pipeline {
-    
+
+    def scannerhome = tools 'sonarqube_server'
+      
     environment{
         IMAGE_NAME="python_app"
         IMAGE_TAG="latest"
@@ -31,8 +33,7 @@ pipeline {
             }
 
 
-         stage("static code analysis with sonar"){
-            scannerhome = tools 'sonarqube_server'     
+         stage("static code analysis with sonar"){     
             steps{
                script {
                    withSonarQubeEnv('sonarqube_server'){
