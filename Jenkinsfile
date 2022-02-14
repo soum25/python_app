@@ -34,7 +34,7 @@ pipeline {
         stage("static code analysis with sonar"){
             steps{
                script {
-                withSonarQubeEnv(installationName: 'sonarqube_server'){
+                withSonarQubeEnv('sonarqube_server'){
                         sh """ ${scannerhome}/bin/sonar-scanner \
                         -Dsonar.projectKey=python_test_2 \
                         -Dsonar.sources=. \
