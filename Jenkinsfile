@@ -35,7 +35,7 @@ pipeline {
             steps{
                script {
                 withSonarQubeEnv('sonarqube_server'){
-                        sh """ ${scannerhome}/bin/sonar-scanner \
+                        sh """ sonar-scanner \
                         -Dsonar.projectKey=python_test_2 \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=http://192.168.6.132:9000 \
