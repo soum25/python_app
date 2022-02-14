@@ -34,7 +34,7 @@ pipeline {
         stage("static code analysis with sonar"){
             steps{
                script {
-                   scannerHome = tool 'sonarqube_scanner';}
+                   scannerHome = tool 'sonarqube_scanner';
 
                    withSonarQubeEnv('sonarqube_scanner'){
                         sh """ ${scannerHome}/bin/sonar-scanner \
