@@ -39,6 +39,7 @@ pipeline {
                         -Dsonar.projectKey=python_test_2 \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=http://192.168.6.132:9000 \
+                        -Dsonar.login=3b478d7bc0ed48006b608f83128bb606ff5e679f
                         """
                         }
                     }
