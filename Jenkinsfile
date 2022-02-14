@@ -34,8 +34,10 @@ pipeline {
         stage("static code analysis with sonar"){
             steps{
                script {
-                withSonarQubeEnv('sonarqube_scanner'){
-                        sh """ sonar-scanner \
+                   scannerHome = tool 'sonarqube_scanner';}
+
+                   withSonarQubeEnv('sonarqube_scanner'){
+                        sh """ ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=python_test_2 \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=http://192.168.6.132:9000 \
