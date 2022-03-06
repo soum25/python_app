@@ -30,19 +30,21 @@ pipeline {
                 }
             }
 
+        jobProperties = readProperties (file: 'python_app/integration_sonarqube/job.poperties')
 
         stage("static code analysis with sonar"){
             steps{
                script {
-                   scannerHome = tool 'sonarqube_scanner';
-
-                   withSonarQubeEnv('sonarqube_scanner'){
-                        sh """ ${scannerHome}/bin/sonar-scanner \
+                   withSonarQubeEnv(jobProperties.sonarInstance){
+                       withEnv(["SONAR_HOME=${tool jobProperties.sonarVersion}/bin"]) {
+                        sh """ ${jobProperties.sonarVersion}/bin/sonar-scanner -Dprojet.settings=integration_sonarqube/sonar.poperties \
                         -Dsonar.projectKey=python_test_2 \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=http://192.168.6.132:9000 \
-                        -Dsonar.login=3b478d7bc0ed48006b608f83128bb606ff5e679f
+                        -Dsonar.python.coverage.reportPaths=python_app/coverage.xml \
                         """
+                            }
+
                         }
                     }
                 }
