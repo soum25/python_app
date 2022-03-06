@@ -38,7 +38,7 @@ pipeline {
                script {
                    withSonarQubeEnv(jobProperties.sonarInstance){
                        withEnv(["SONAR_HOME=${tool jobProperties.sonarVersion}/bin"]) {
-                        sh """ ${jobProperties.sonarVersion}/bin/sonar-scanner -Dprojet.settings=integration_sonarqube/sonar.poperties \
+                        sh """ ${jobProperties.sonarVersion}/bin/sonar-scanner -Dprojet.settings=integration_sonarqube/sonar-project.poperties \
                         -Dsonar.projectKey=python_test_2 \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=http://192.168.6.132:9000 \
