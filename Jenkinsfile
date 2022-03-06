@@ -16,6 +16,7 @@ pipeline {
                 script {
                     sh """
                         pip install -r requirements.txt
+                        virtualenv app_venv
                         source app_venv/bin/activate  
                         """
                     }
