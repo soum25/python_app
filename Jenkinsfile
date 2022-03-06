@@ -32,21 +32,41 @@ pipeline {
             }
 
 
+        // stage("static code analysis with sonar"){
+        //     steps{
+        //        script {
+        //            Properties jobProperties = new File('python_app/integration_sonarqube/job.poperties')
+
+        //            withSonarQubeEnv(jobProperties.sonarInstance){
+        //                withEnv(["SONAR_HOME=${tool jobProperties.sonarVersion}/bin"]) {
+        //                 sh """ ${jobProperties.sonarVersion}/bin/sonar-scanner -Dprojet.settings=integration_sonarqube/sonar-project.poperties \
+        //                 -Dsonar.projectKey=python_test_2 \
+        //                 -Dsonar.sources=. \
+        //                 -Dsonar.host.url=http://192.168.6.132:9000 \
+        //                 -Dsonar.python.coverage.reportPaths=python_app/coverage.xml \
+        //                 """
+        //                     }
+
+        //                 }
+        //             }
+        //         }
+        //     }
+
+
+
+
         stage("static code analysis with sonar"){
             steps{
                script {
-                   Properties jobProperties = new File('python_app/integration_sonarqube/job.poperties')
-
-                   withSonarQubeEnv(jobProperties.sonarInstance){
-                       withEnv(["SONAR_HOME=${tool jobProperties.sonarVersion}/bin"]) {
-                        sh """ ${jobProperties.sonarVersion}/bin/sonar-scanner -Dprojet.settings=integration_sonarqube/sonar-project.poperties \
+                   def scannerHome = tool 'SonarQube_Scanner_4.7';
+                   withSonarQubeEnv('SonarQube'){
+                        sh """ 
+                        ${tool("SonarQube_Scanner_4.7")}/bin/sonar-scanner \
                         -Dsonar.projectKey=python_test_2 \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=http://192.168.6.132:9000 \
                         -Dsonar.python.coverage.reportPaths=python_app/coverage.xml \
                         """
-                            }
-
                         }
                     }
                 }
