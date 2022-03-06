@@ -35,8 +35,8 @@ pipeline {
         stage("static code analysis with sonar"){
             steps{
                script {
-                   jobProperties = readProperties (file: 'python_app/integration_sonarqube/job.poperties')
-                   
+                   jobProperties = readProperties file: 'python_app/integration_sonarqube/job.poperties'
+
                    withSonarQubeEnv(jobProperties.sonarInstance){
                        withEnv(["SONAR_HOME=${tool jobProperties.sonarVersion}/bin"]) {
                         sh """ ${jobProperties.sonarVersion}/bin/sonar-scanner -Dprojet.settings=integration_sonarqube/sonar-project.poperties \
