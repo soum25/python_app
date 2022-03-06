@@ -61,7 +61,7 @@ pipeline {
                    def scannerHome = tool 'SonarQube_Scanner_4.7';
                    withSonarQubeEnv('SonarQube'){
                         sh """ 
-                        ${tool("SonarQube_Scanner_4.7")}/bin/sonar-scanner \
+                        ${tool("SonarQube_Scanner_4.7")}/bin/sonar-scanner -Dprojet.settings=integration_sonarqube/sonar-project.poperties \
                         -Dsonar.projectKey=python_test_2 \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=http://192.168.6.132:9000 \
