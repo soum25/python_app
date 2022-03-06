@@ -31,7 +31,7 @@ pipeline {
                 }
             }
 
-        jobProperties = readProperties (file: 'python_app/integration_sonarqube/job.poperties')
+        def jobProperties = readProperties (file: 'python_app/integration_sonarqube/job.poperties')
 
         stage("static code analysis with sonar"){
             steps{
