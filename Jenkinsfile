@@ -4,6 +4,7 @@ pipeline {
         IMAGE_NAME="python_app"
         IMAGE_TAG="latest"
         IMAGE_REPO="soum25"
+        jobProperties = readProperties (file: 'python_app/integration_sonarqube/job.poperties')
     }
     
     agent {
@@ -31,7 +32,6 @@ pipeline {
                 }
             }
 
-        def jobProperties = readProperties (file: 'python_app/integration_sonarqube/job.poperties')
 
         stage("static code analysis with sonar"){
             steps{
