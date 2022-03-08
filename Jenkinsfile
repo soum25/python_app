@@ -26,7 +26,10 @@ pipeline {
         stage("Test"){
             steps{
                script {
-                sh " pytest -v"
+                sh """
+                    cd /tests
+                    coverage run -m pytest -rap  --junitxml coverage.xml
+                    """
                     }
                 }
             }
@@ -61,11 +64,11 @@ pipeline {
                    def scannerHome = tool 'SonarQube_Scanner_4.7';
                    withSonarQubeEnv('SonarQube'){
                         sh """ 
-                        ${tool("SonarQube_Scanner_4.7")}/bin/sonar-scanner -Dprojet.settings=integration_sonarqube/sonar-project.poperties \
+                        ${tool("SonarQube_Scanner_4.7")}/bin/sonar-scanner -Dprojet.settings=./integration_sonarqube/sonar-project.poperties \
                         -Dsonar.projectKey=python_test_2 \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=http://192.168.6.132:9000 \
-                        -Dsonar.python.coverage.reportPaths=python_app/coverage.xml \
+                        -Dsonar.python.coverage.reportPaths=python_app/tests/coverage.xml \
                         """
                         }
                     }
