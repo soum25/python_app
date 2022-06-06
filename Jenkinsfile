@@ -23,16 +23,7 @@ pipeline {
                 }
             }
 
-        stage("Test change position"){
-            steps{
-               script {
-                sh """
-                    cd ./tests
-                    coverage run -m pytest -rap  --junitxml coverage.xml
-                    """
-                    }
-                }
-            }
+
 
         stage("Build image"){
             steps{
@@ -49,8 +40,19 @@ pipeline {
             script {
                 sh """
                 docker run -d --name $IMAGE_NAME -p 70:5550 ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG}
-                docker stop $IMAGE_NAME
                 """
+                    }
+                }
+            }
+
+
+        stage("Test change position"){
+            steps{
+               script {
+                sh """
+                    cd ./tests
+                    coverage run -m pytest -rap  --junitxml coverage.xml
+                    """
                     }
                 }
             }
@@ -58,6 +60,7 @@ pipeline {
         stage("Clean container"){
             steps{
                 sh """
+                docker stop $IMAGE_NAME
                 docker rm -f $IMAGE_NAME
                 """
             }
