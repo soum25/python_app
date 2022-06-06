@@ -45,18 +45,6 @@ pipeline {
                 }
             }
 
-
-        stage("Test change position"){
-            steps{
-               script {
-                sh """
-                    cd ./tests
-                    coverage run -m pytest -rap  --junitxml coverage.xml
-                    """
-                    }
-                }
-            }
-
         stage("Clean container"){
             steps{
                 sh """
