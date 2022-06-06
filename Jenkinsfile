@@ -27,7 +27,7 @@ pipeline {
             steps{
                script {
                 sh """
-                    cd /tests
+                    cd ./tests
                     coverage run -m pytest -rap  --junitxml coverage.xml
                     """
                     }
