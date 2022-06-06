@@ -1,0 +1,6 @@
+projectKey=python_test_2
+serverUrl=http://192.168.6.132:9000
+serverVersion=9.3.0.51899
+dashboardUrl=http://192.168.6.132:9000/dashboard?id=python_test_2
+ceTaskId=AX9gyTgWFZ4L1xlwYlvy
+ceTaskUrl=http://192.168.6.132:9000/api/ce/task?id=AX9gyTgWFZ4L1xlwYlvy
