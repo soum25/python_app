@@ -23,7 +23,7 @@ pipeline {
                 }
             }
 
-        stage("Test"){
+        stage("Test change position"){
             steps{
                script {
                 sh """
